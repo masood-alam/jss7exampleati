@@ -300,11 +300,11 @@ public class Client extends AbstractBase {
 
 		    	EncodingScheme es = new BCDEvenEncodingScheme();
 		      	GlobalTitle GTHLR_from_msisdn = new GlobalTitle0100Impl(
-		      			"923335681111", 0, es, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY,
+		      			"923455687890", 0, es, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY,
 		      			NatureOfAddress.INTERNATIONAL );
 
 		     	GlobalTitle gtSCF = new GlobalTitle0100Impl(
-		     			"923330055101", 0, es, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, 
+		     			"923211234567", 0, es, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, 
 		      			NatureOfAddress.INTERNATIONAL );
 		   
 		   	  AddressString origRef = this.mapProvider.getMAPParameterFactory()
@@ -333,11 +333,11 @@ public class Client extends AbstractBase {
 		    	RequestedInfo inf = this.mapProvider.getMAPParameterFactory().createRequestedInfo(true, false, null, false, null, false, false, false);
 		    	
 		    	msisdn = this.mapProvider.getMAPParameterFactory().createISDNAddressString(
-		    			AddressNature.international_number, NumberingPlan.ISDN, "923335681111");
+		    			AddressNature.international_number, NumberingPlan.ISDN, "923455681234");
 		    	si = this.mapProvider.getMAPParameterFactory().createSubscriberIdentity(msisdn);
 		    	
 		    	gsmscfaddress = this.mapProvider.getMAPParameterFactory().createISDNAddressString(
-		    			AddressNature.international_number, NumberingPlan.ISDN, "923009224350");
+		    			AddressNature.international_number, NumberingPlan.ISDN, "923123456789");
 		    
 		    	mapDialog.addAnyTimeInterrogationRequest(si, inf, gsmscfaddress, null);
 		    

@@ -3,7 +3,7 @@
 
 	<test name="test1">
 		<classes>
-			<class name="com.vectracom.jss7.standalone.example.ClientTest"></class>
+			<class name="com.vectracom.jss7.standalone.example.SimpleTest"></class>
 		</classes>
 	</test>
 

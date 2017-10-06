@@ -652,91 +652,67 @@ public class SimpleTest {
 		//	logger.info("client onAsActive");
 			Assert.assertEquals(arg0.isUp(), true);
 		}
-
 		public void onAsCreated(As arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAsDestroyed(As arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAsDown(As arg0, State arg1) {
-			logger.info("client onAsDown");
 			
 		}
-
 		public void onAsInactive(As arg0, State arg1) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAsPending(As arg0, State arg1) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAspActive(Asp arg0, State arg1) {
-			//logger.info("client onAspActive");
 			Assert.assertEquals(arg0.isUp(), true);
-
 		}
-
 		public void onAspAssignedToAs(As arg0, Asp arg1) {
 			// TODO Auto-generated method stub
-			
+		
 		}
-
-		public void onAspDown(Asp arg0, State arg1) {
-			logger.info("client onAspDown");
-			
+		public void onAspDown(Asp arg0, State arg1) {			
 		}
-
 		public void onAspFactoryCreated(AspFactory arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAspFactoryDestroyed(AspFactory arg0) {
 			// TODO Auto-generated method stub
-			
+		
 		}
-
 		public void onAspFactoryStarted(AspFactory arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAspFactoryStopped(AspFactory arg0) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAspInactive(Asp arg0, State arg1) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onAspUnassignedFromAs(As arg0, Asp arg1) {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onRemoveAllResources() {
 			// TODO Auto-generated method stub
 			
 		}
-
 		public void onServiceStarted() {
 			// TODO Auto-generated method stub
 			
 		}
-
-		public void onServiceStopped() {
-			// TODO Auto-generated method stub
-			
+		public void onServiceStopped() {		
 		}
 		
 	}

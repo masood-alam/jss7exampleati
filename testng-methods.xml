@@ -1,5 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Methods" parallel="methods" thread-count="1"  verbose="1">
-	<test name="simple">
-	</test>
-</suite>

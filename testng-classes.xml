@@ -1,9 +1,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Suite1" parallel="classes" thread-count="1" verbose="1">
+<suite name="Suite1" parallel="classes"  verbose="1">
 
 	<test name="test1">
+		<parameter name="clientIp" value="127.0.0.1"></parameter>
+		<parameter name="clientPort" value="8012"></parameter>
+		<parameter name="serverIp" value="127.0.0.1"></parameter>
+		<parameter name="serverPort" value="8011"></parameter>
+		<parameter name="type" value="sctp"></parameter>
 		<classes>
-			<class name="com.vectracom.jss7.standalone.example.SimpleTest"></class>
+			<class name="com.vectracom.jss7.standalone.example.ClientTest">
+				
+				 
+			</class>
 		</classes>
 	</test>
 

@@ -13,7 +13,7 @@
   	<sctp.version>1.7.8</sctp.version>
   	<jss7.restcomm.version>7.0.1383</jss7.restcomm.version>
   	<junit.version>3.8.1</junit.version>
-  	<testng.version>6.2</testng.version>
+  	<testng.version>6.8</testng.version>
   	<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
   </properties>
   <dependencies>
@@ -35,7 +35,7 @@
   	<dependency>
   		<groupId>org.mobicents.protocols.ss7.m3ua</groupId>
   		<artifactId>m3ua-api</artifactId>
-  		<version>7.0.1383</version>
+  		<version>${jss7.restcomm.version}</version>
   	</dependency>
   	<dependency>
   		<groupId>org.mobicents.protocols.ss7.m3ua</groupId>
@@ -144,7 +144,6 @@
   			<version>${maven-surefire-plugin.version}</version>
   			  <configuration>
                        <suiteXmlFiles>
-                               <suiteXmlFile>testng-methods.xml</suiteXmlFile>
                                <suiteXmlFile>testng-classes.xml</suiteXmlFile>
                        </suiteXmlFiles>
               </configuration>

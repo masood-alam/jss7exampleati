@@ -96,6 +96,8 @@ import org.mobicents.protocols.ss7.tcap.api.TCAPStack;
 import org.mobicents.protocols.ss7.tcap.asn.ApplicationContextName;
 import org.mobicents.protocols.ss7.tcap.asn.comp.Problem;
 
+import com.vectracom.jss7.standalone.example.Client.Configuration;
+
 public class Server extends AbstractBase{
 	private static Logger logger = Logger.getLogger(Server.class);
 
@@ -116,9 +118,30 @@ public class Server extends AbstractBase{
 	private MAPStackImpl mapStack;
 	private MAPProvider mapProvider;
 
+	protected void addAssociation(String serverIp, int serverPort, String clientIp, int clientPort, String ipChannelType) {
+		this.SERVER_IP = serverIp;
+		this.SERVER_PORT = serverPort;
+		this.CLIENT_IP = clientIp;
+		this.CLIENT_PORT = clientPort;
+
+		if (ipChannelType.equals("sctp")) {
+			this.ipChannelType = IpChannelType.SCTP;
+		}
+		else if (ipChannelType.equals("tcp")) {
+			this.ipChannelType = IpChannelType.TCP;
+		}
+		else {
+			throw new IllegalArgumentException("unknown ipChannelType");
+		}
+ 
+	}
 	
-	public void initSCTP(IpChannelType ipChannelType) throws Exception {
+	public void initSCTP() throws Exception {
 	//	logger.info("Initializing SCTP Stack ....");
+		if (CLIENT_IP == null)
+			throw new NullPointerException("CLIENT_IP is null");
+		if (SERVER_IP == null)
+			throw new NullPointerException("SERVER_IP is null");
 		
 		if (Configuration.Serverside == true) {
 		this.sctpManagement = new ManagementImpl("Server");
@@ -151,8 +174,18 @@ public class Server extends AbstractBase{
 					SERVER_ASSOCIATION_NAME, ipChannelType, null);		
 		}
 	//	logger.info("Initialized SCTP Stack ....");
-}	
+	}	
 
+	public void stopSCTP() throws Exception {
+		if (Configuration.Serverside == false) {
+			this.sctpManagement.stop();
+		}
+		else {
+			this.sctpManagement.stop();
+		}
+	}
+
+	
 	public AssociationImpl getAssociation() {
 		return this.serverAssociation;
 	}
@@ -294,9 +327,9 @@ public class Server extends AbstractBase{
 		//logger.debug("Initialized MAP Stack ....");
 	}
 
-	protected void initializeStack(IpChannelType ipChannelType) throws Exception {
+	protected void initializeStack() throws Exception {
 
-		this.initSCTP(ipChannelType);
+		this.initSCTP();
 
 		this.initM3UA();
 
@@ -312,13 +345,21 @@ public class Server extends AbstractBase{
 	}
 	
 	
+	protected void stop() throws Exception {
+		this.mapStack.stop();
+		this.tcapStack.stop();
+		this.sccpStack.stop();
+		this.serverM3UAMgmt.stop();
+		this.sctpManagement.stop();
+	}
 	
 	public static void main(String[] args) {
 		logger.info("Hello Server(HLR)");
 		final Server server = new Server();
 		
+		server.addAssociation("127.0.0.1", 8011, "127.0.0.1", 8012, "sctp");
 		try {
-			server.initializeStack(IpChannelType.SCTP);
+			server.initializeStack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

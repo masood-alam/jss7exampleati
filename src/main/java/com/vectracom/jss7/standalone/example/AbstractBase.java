@@ -10,6 +10,7 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.SimpleLayout;
+import org.mobicents.protocols.api.IpChannelType;
 import org.mobicents.protocols.ss7.m3ua.impl.parameter.ParameterFactoryImpl;
 import org.mobicents.protocols.ss7.map.api.MAPDialogListener;
 import org.mobicents.protocols.ss7.map.api.service.mobility.MAPServiceMobilityListener;
@@ -30,14 +31,16 @@ public abstract class AbstractBase implements MAPDialogListener, MAPServiceMobil
 	// M3UA details
 //	protected final String CLIENT_IP = "192.168.56.1";
 //	protected final String CLIENT_IP = "172.17.0.1";
-	protected final String CLIENT_IP = "127.0.0.1";
-	protected final int CLIENT_PORT = 8012;
+	protected String CLIENT_IP = null;//"127.0.0.1";
+	protected int CLIENT_PORT = 8012;
 
 //	protected final String SERVER_IP = "192.168.56.1";
 //	protected final String SERVER_IP = "172.17.0.2";
 //	protected final String SERVER_IP = "172.17.0.2";
-	protected final String SERVER_IP = "127.0.0.1";
-	protected final int SERVER_PORT = 8011;
+	protected String SERVER_IP = null;//"127.0.0.1";
+	protected int SERVER_PORT = 8011;
+	
+	protected IpChannelType ipChannelType=IpChannelType.SCTP;
 
 	protected final int ROUTING_CONTEXT = 101;
 

@@ -85,8 +85,10 @@ public class SimpleTest {
 	public void setUp() throws Exception {
 		server = new Server();
 		client = new Client();
-		client.initializeStack(IpChannelType.SCTP);
-		server.initializeStack(IpChannelType.SCTP);
+		server.addAssociation("127.0.0.1", 8011, "127.0.0.1", 8012, "sctp");
+		client.addAssociation("127.0.0.1", 8012, "127.0.0.1", 8011, "sctp");
+		client.initializeStack();
+		server.initializeStack();
 
 	}
 	
@@ -94,11 +96,6 @@ public class SimpleTest {
 	public void testConnection() throws Exception {
 		this.setUp();
 		
-		// there is only one listener possible in association !!!
-	//	client.getAssociation().setAssociationListener(new ClientAssociationListenerImpl());
-	//	client.getManagement().startAssociation("clientAssociation");
-	//	server.getAssociation().setAssociationListener(new ServerAssociationListenerImpl());
-	//	server.getManagement().startAssociation("serverAssociation");
 		
 		client.getMtp3Management().addM3UAManagementEventListener(new ClientMtp3MangementListenerImpl());
 		server.getMtp3Management().addM3UAManagementEventListener(new ServerMtp3ManagementListenerImpl());
@@ -122,7 +119,8 @@ public class SimpleTest {
 		while(anyTimeInterrogationResponse == null) {
 			Thread.sleep(500);
 		}
-				
+			
+		
 		
 	}
 	
@@ -718,71 +716,7 @@ public class SimpleTest {
 	}
 	
 	
-	private class ServerAssociationListenerImpl implements AssociationListener {
-
-		public void inValidStreamId(PayloadData arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationLost(Association arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationRestart(Association arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationShutdown(Association arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationUp(Association arg0, int arg1, int arg2) {
-			// TODO Auto-generated method stub
-			logger.info("server onUp");
-		}
-
-		public void onPayload(Association arg0, PayloadData arg1) {
-			// TODO Auto-generated method stub
-			
-		}
 		
-	}
 	
-	private class ClientAssociationListenerImpl implements AssociationListener {
-
-		public void inValidStreamId(PayloadData arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationLost(Association arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationRestart(Association arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationShutdown(Association arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onCommunicationUp(Association arg0, int arg1, int arg2) {
-			logger.info("client onUp");
-		}
-
-		public void onPayload(Association arg0, PayloadData arg1) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 
 }

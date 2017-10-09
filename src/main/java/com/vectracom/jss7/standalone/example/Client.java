@@ -101,28 +101,41 @@ public class Client extends AbstractBase {
 	private MAPStackImpl mapStack;
 	private MAPProvider mapProvider;
 
+	protected void addAssociation(String clientIp, int clientPort, String serverIp, int serverPort, String ipChannelType) {
+		this.CLIENT_IP = clientIp;
+		this.CLIENT_PORT = clientPort;
+		this.SERVER_IP = serverIp;
+		this.SERVER_PORT = serverPort;
+		if (ipChannelType.equals("sctp")) {
+			this.ipChannelType = IpChannelType.SCTP;
+		}
+		else if (ipChannelType.equals("tcp")) {
+			this.ipChannelType = IpChannelType.TCP;
+		}
+		else {
+			throw new IllegalArgumentException("unknown ipChannelType");
+		}
+	}
 	
-	public void initSctpClient(IpChannelType ipChannelType) throws Exception {
-	//	logger.info("Initializing SCTP Stack ....");
+	public void initSCTP() throws Exception {
 
-			 this.sctpManagement = new ManagementImpl("Client");
-			 this.sctpManagement.setSingleThread(true);
-			 this.sctpManagement.start();
-			 this.sctpManagement.setConnectDelay(10000);
-			 this.sctpManagement.removeAllResourses();
+		if (CLIENT_IP == null)
+			throw new NullPointerException("CLIENT_IP is null");
+		if (SERVER_IP == null)
+			throw new NullPointerException("SERVER_IP is null");
+
+		if (Configuration.Serverside == false) {
+			this.sctpManagement = new ManagementImpl("Client");
+			this.sctpManagement.setSingleThread(true);
+			this.sctpManagement.start();
+			this.sctpManagement.setConnectDelay(10000);
+			this.sctpManagement.removeAllResourses();
 
 			 // 1. Create SCTP Association
-			 this.clientAssociation = sctpManagement.addAssociation(CLIENT_IP, CLIENT_PORT, SERVER_IP, SERVER_PORT, 
+			this.clientAssociation = sctpManagement.addAssociation(CLIENT_IP, CLIENT_PORT, SERVER_IP, SERVER_PORT, 
 					CLIENT_ASSOCIATION_NAME, ipChannelType, null);
-			
-		
-		//logger.info("Initialized SCTP Stack ....");
-	}
-
-	public void initSctpServer(IpChannelType ipChannelType) throws Exception {
-	//	logger.info("Initializing SCTP Stack ....");
-
-			// server configuration of SCTP
+		}
+		else  {
 			this.sctpManagement = new ManagementImpl("Client");
 
 			this.sctpManagement.start();
@@ -135,10 +148,20 @@ public class Client extends AbstractBase {
 			.addServerAssociation(SERVER_IP, SERVER_PORT, CLIENT_NAME, CLIENT_ASSOCIATION_NAME, ipChannelType);
 			
 			// 3. Start Server
-			sctpManagement.startServer(CLIENT_NAME);
-			
+			sctpManagement.startServer(CLIENT_NAME);		
+		}
 		
-	//	logger.info("Initialized SCTP Stack ....");
+	}
+
+	public void stopSCTP() throws Exception {
+		if (Configuration.Serverside == false) {
+			this.sctpManagement.removeAllResourses();
+			this.sctpManagement.stop();
+		}
+		else {
+			this.sctpManagement.removeAllResourses();
+			this.sctpManagement.stop();
+		}
 	}
 	
 	public AssociationImpl getAssociation() {
@@ -270,12 +293,9 @@ public class Client extends AbstractBase {
 	}
 	
 	
-	protected void initializeStack(IpChannelType ipChannelType) throws Exception {
+	protected void initializeStack() throws Exception {
 
-		if (Configuration.Serverside == true)
-			this.initSctpServer(ipChannelType);
-		else
-			this.initSctpClient(ipChannelType);
+		this.initSCTP();
 
 		this.initM3UA();
 		this.initSCCP();
@@ -287,6 +307,13 @@ public class Client extends AbstractBase {
 
 	}	
 	
+	protected void stop() throws Exception {
+		this.mapStack.stop();
+		this.tcapStack.stop();
+		this.sccpStack.stop();
+		this.M3UAMgmt.stop();
+		this.sctpManagement.stop();
+	}
 	
 	  protected void initiateATI() throws MAPException {
 		    
@@ -348,8 +375,9 @@ public class Client extends AbstractBase {
 
 		logger.info("Hello Client");
 		Client client = new Client();
+		client.addAssociation("127.0.0.1", 8012, "127.0.0.1", 8011, "sctp");
 		try {
-			client.initializeStack(IpChannelType.SCTP);
+			client.initializeStack();
 			Thread.sleep(10000);
 			client.initiateATI();
 			Thread.sleep(20000);

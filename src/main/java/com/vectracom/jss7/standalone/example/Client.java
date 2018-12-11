@@ -334,8 +334,10 @@ public class Client extends AbstractBase {
 		     			"923211234567", 0, es, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, 
 		      			NatureOfAddress.INTERNATIONAL );
 		   
+				// ufone message uses gsmSCF GT 923330055101
 		   	  AddressString origRef = this.mapProvider.getMAPParameterFactory()
 		              .createAddressString(AddressNature.international_number, NumberingPlan.ISDN, "12345");
+			// ufone message uses msisdn in destaddress
 		      AddressString destRef = this.mapProvider.getMAPParameterFactory()
 		              .createAddressString(AddressNature.international_number, NumberingPlan.ISDN, "67890");
 		     	

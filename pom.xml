@@ -7,11 +7,11 @@
   </parent>
   <groupId>com.vectracom.jss7.standalone.example</groupId>
   <artifactId>jss7exampleati</artifactId>
-  <version>1.0</version>
+  <version>2.0</version>
   <properties>
   	<log4j.version>1.2.17</log4j.version>
   	<sctp.version>1.7.8</sctp.version>
-  	<jss7.restcomm.version>7.0.1383</jss7.restcomm.version>
+  	<jss7.restcomm.version>7.4.0-102</jss7.restcomm.version>
   	<junit.version>3.8.1</junit.version>
   	<testng.version>6.8</testng.version>
   	<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>

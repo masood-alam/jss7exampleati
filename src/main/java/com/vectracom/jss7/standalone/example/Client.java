@@ -67,6 +67,7 @@ import org.mobicents.protocols.ss7.map.api.service.mobility.subscriberManagement
 import org.mobicents.protocols.ss7.map.api.service.mobility.subscriberManagement.DeleteSubscriberDataResponse;
 import org.mobicents.protocols.ss7.map.api.service.mobility.subscriberManagement.InsertSubscriberDataRequest;
 import org.mobicents.protocols.ss7.map.api.service.mobility.subscriberManagement.InsertSubscriberDataResponse;
+import org.mobicents.protocols.ss7.map.primitives.SubscriberIdentityImpl;
 import org.mobicents.protocols.ss7.sccp.LoadSharingAlgorithm;
 import org.mobicents.protocols.ss7.sccp.OriginationType;
 import org.mobicents.protocols.ss7.sccp.RuleType;
@@ -233,7 +234,7 @@ public class Client extends AbstractBase {
          this.sccpStack.getSccpResource().addRemoteSsn(1, SERVER_SPC,  8, 0, false);
          this.sccpStack.getSccpResource().addRemoteSsn(2, SERVER_SPC,  6, 0, false);
 
-         this.sccpStack.getRouter().addMtp3ServiceAccessPoint(1, 1, CLIENT_SPC, NETWORK_INDICATOR, 0);
+         this.sccpStack.getRouter().addMtp3ServiceAccessPoint(1, 1, CLIENT_SPC, NETWORK_INDICATOR, 0, null);
          this.sccpStack.getRouter().addMtp3Destination(1, 1, SERVER_SPC, SERVER_SPC, 0, 255, 255);
          // configure gtt address
          GlobalTitle gt = null;
@@ -246,7 +247,6 @@ public class Client extends AbstractBase {
          SccpAddress pattern = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt, SERVER_SPC, 0 );
          this.sccpStack.getRouter().addRule(1, RuleType.SOLITARY, LoadSharingAlgorithm.Undefined, OriginationType.LOCAL, pattern, "K", 1, -1, null, 0);
 
-         
          
          
          gt = new GlobalTitle0100Impl("000", 0, ec,  org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, NatureOfAddress.INTERNATIONAL);
@@ -364,7 +364,9 @@ public class Client extends AbstractBase {
 		    	msisdn = this.mapProvider.getMAPParameterFactory().createISDNAddressString(
 		    			AddressNature.international_number, NumberingPlan.ISDN, "923455681234");
 		    	si = this.mapProvider.getMAPParameterFactory().createSubscriberIdentity(msisdn);
-		    	
+				
+				//si = new SubscriberIdentityImpl(msisdn);
+				
 		    	gsmscfaddress = this.mapProvider.getMAPParameterFactory().createISDNAddressString(
 		    			AddressNature.international_number, NumberingPlan.ISDN, "923123456789");
 		    
@@ -380,7 +382,7 @@ public class Client extends AbstractBase {
 		client.addAssociation("127.0.0.1", 8012, "127.0.0.1", 8011, "sctp");
 		try {
 			client.initializeStack();
-			Thread.sleep(10000);
+			Thread.sleep(15000);
 			client.initiateATI();
 			Thread.sleep(20000);
 			
@@ -624,5 +626,11 @@ public class Client extends AbstractBase {
 		  //unreachable code
 		  public static final boolean Serverside = false;
 		}
+
+	public void onDialogRequestEricsson(MAPDialog arg0, AddressString arg1, AddressString arg2, AddressString arg3,
+			AddressString arg4) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

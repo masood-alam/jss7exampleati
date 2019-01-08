@@ -268,7 +268,7 @@ public class Server extends AbstractBase{
 		 this.sccpStack.getSccpResource().addRemoteSpc(1, CLIENT_SPC, 0, 0);
          this.sccpStack.getSccpResource().addRemoteSsn(1, CLIENT_SPC,  CLIENT_SSN, 0, false);
 
-         this.sccpStack.getRouter().addMtp3ServiceAccessPoint(1, 1, SERVER_SPC, NETWORK_INDICATOR, 0);
+         this.sccpStack.getRouter().addMtp3ServiceAccessPoint(1, 1, SERVER_SPC, NETWORK_INDICATOR, 0, null);
          this.sccpStack.getRouter().addMtp3Destination(1, 1, CLIENT_SPC, CLIENT_SPC, 0, 255, 255);
          // configure gtt address
          EncodingScheme ec = new BCDEvenEncodingScheme();
@@ -360,6 +360,7 @@ public class Server extends AbstractBase{
 		server.addAssociation("127.0.0.1", 8011, "127.0.0.1", 8012, "sctp");
 		try {
 			server.initializeStack();
+			Thread.sleep(100000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -705,5 +706,11 @@ public class Server extends AbstractBase{
 		  // HLR should not be set as serverside=false because client can not multiclient sctp as server
 		  public static final boolean Serverside = true;
 		}
+
+	public void onDialogRequestEricsson(MAPDialog arg0, AddressString arg1, AddressString arg2, AddressString arg3,
+			AddressString arg4) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
